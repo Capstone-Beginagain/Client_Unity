@@ -3,18 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UDPNetwork : MonoBehaviour
 {
     public string server_ipAddress = "172.30.1.10";
-    public int server_port = 9876;
+    public int[] server_port = { 9876, 9875, 9874, 9873 };
 
-    private UdpClient udpClient;
-    private IPEndPoint endPoint;
-    private Thread ListenThread;
+    private List<UdpClient> udpList = new List<UdpClient>();
+    private List<Thread> threadList = new List<Thread>();
 
     private bool isConnected  = false;
 
@@ -31,20 +32,29 @@ public class UDPNetwork : MonoBehaviour
             if (isConnected)
             {
                 isConnected = false;
-                udpClient.Close();
+                for(int i = 0;i < udpList.Count; i++)
+                {
+                    udpList[i].Close();
+                    threadList[i].Abort();
+                }
             }
             else
             {
-                NetworkingStart();
+                for (int i = 0; i < server_port.Length; i++) {
+                    NetworkingStart(server_port[i]);
+                }
             }
         }   
     }
-
-    void NetworkingStart()
+    
+    void NetworkingStart(int server_port)
     {
-        udpClient = new UdpClient();
+
+        UdpClient udpClient = new UdpClient();
         udpClient.Client.Blocking = false;
-        endPoint = new IPEndPoint(IPAddress.Any, server_port);
+
+        udpList.Add(udpClient);
+        IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, server_port);
 
         try
         {
@@ -58,14 +68,18 @@ public class UDPNetwork : MonoBehaviour
             Debug.LogException(ex);
         }
 
-        ListenThread = new Thread(() =>
-        {
-            Listen();
-        });
-        ListenThread.Start();
+        Thread thread = new Thread(() =>
+               {
+                Listen(udpClient,endPoint);
+               });
+        threadList.Add(thread);
+        thread.Start();
     }
 
-    public void Listen()
+
+
+
+    public void Listen(UdpClient udpClient, IPEndPoint endPoint)
     {
         Debug.Log("Listen Start...");
         while (isConnected)
@@ -85,3 +99,4 @@ public class UDPNetwork : MonoBehaviour
     }
 
 }
+.
