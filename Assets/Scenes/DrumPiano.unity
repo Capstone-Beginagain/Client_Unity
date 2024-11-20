@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 574250590}
   - component: {fileID: 574250593}
   - component: {fileID: 574250592}
-  - component: {fileID: 574250591}
+  - component: {fileID: 574250594}
   m_Layer: 0
   m_Name: FloorTom
   m_TagString: Untagged
@@ -553,21 +553,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7924810985388623263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &574250591
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 574250589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d44df4539a84d5448f201233699d963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  closeHiHatClip: {fileID: 0}
-  openHiHatClip: {fileID: 0}
-  pS: {fileID: 0}
 --- !u!136 &574250592
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -687,6 +672,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &574250594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 574250589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cd59b3eec885c74bbca58604051a957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &607570175
 GameObject:
   m_ObjectHideFlags: 0
